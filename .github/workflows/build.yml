@@ -26,8 +26,8 @@ jobs:
 
       - name: Unzip project content
         run: |
-          mkdir content
-          unzip "kids.zip" -d content
+          mkdir www
+          unzip "kids.zip" -d www
 
       - name: Create Cordova Project
         run: |
@@ -35,7 +35,7 @@ jobs:
           cd myapp
           cordova platform add android
           rm -rf www/*
-          cp -r ../content/kids-learning-fun/* www/
+          cp -r ../www/kids-learning-fun/* www/
 
       - name: Build APK (Release)
         run: |
@@ -47,4 +47,3 @@ jobs:
         with:
           name: android-apk
           path: myapp/platforms/android/app/build/outputs/apk/release/app-release.apk
-          
