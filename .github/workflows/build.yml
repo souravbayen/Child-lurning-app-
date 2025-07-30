@@ -35,7 +35,7 @@ jobs:
           cd myapp
           cordova platform add android
           rm -rf www/*
-          cp -r ../content/kids-learning-fun/* www/
+          cp -r ../content/* www/
 
       - name: Build APK (Release)
         run: |
