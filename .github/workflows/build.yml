@@ -1,0 +1,50 @@
+name: Build Offline APK
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Install Cordova, Java JDK, and unzip
+        run: |
+          npm install -g cordova
+          sudo apt-get update
+          sudo apt-get install -y openjdk-17-jdk unzip
+
+      - name: Unzip project content
+        run: |
+          mkdir content
+          unzip "kids.zip" -d content
+
+      - name: Create Cordova Project
+        run: |
+          cordova create myapp com.example.kidslearning "Kids Learning Fun"
+          cd myapp
+          cordova platform add android
+          rm -rf www/*
+          cp -r ../content/kids-learning-fun/* www/
+
+      - name: Build APK (Release)
+        run: |
+          cd myapp
+          cordova build android --release
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: android-apk
+          path: myapp/platforms/android/app/build/outputs/apk/release/app-release.apk
+          
