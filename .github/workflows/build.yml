@@ -37,13 +37,13 @@ jobs:
           rm -rf www/*
           cp -r ../content/* www/
 
-      - name: Build APK (Release)
+      - name: Build APK (Debug)
         run: |
           cd myapp
-          cordova build android --release
+          cordova build android
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: android-apk
-          path: myapp/platforms/android/app/build/outputs/apk/release/app-release.apk
+          path: myapp/platforms/android/app/build/outputs/apk/debug/app-debug.apk
