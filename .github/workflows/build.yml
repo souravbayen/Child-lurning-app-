@@ -25,9 +25,6 @@ jobs:
           java-version: '17'
           cache: gradle
 
-      - name: Set up Android SDK
-        uses: android-actions/setup-android@v3
-
       - name: Install Cordova & unzip
         run: |
           npm install -g cordova
@@ -47,6 +44,9 @@ jobs:
           cd ..
           cp -a content/. myapp/www/
 
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v3
+
       - name: Build APK (Release)
         run: |
           cd myapp
@@ -58,4 +58,3 @@ jobs:
         with:
           name: android-apk
           path: myapp/platforms/android/app/build/outputs/apk/release/app-release.apk
-          
