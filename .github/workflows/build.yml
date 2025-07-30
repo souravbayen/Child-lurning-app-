@@ -18,6 +18,10 @@ jobs:
         with:
           node-version: 18
 
+      # (ঐচ্ছিক) Android SDK setup - বেশিরভাগ সময় দরকার হয় না, থাকলে আরও ভালো
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v3
+
       - name: Install Cordova, Java JDK, and unzip
         run: |
           npm install -g cordova
@@ -35,7 +39,8 @@ jobs:
           cd myapp
           cordova platform add android
           cd ..
-          cp -r content/kids-learning-fun/* myapp/www/
+          # kids.zip থেকে আনজিপ করা সবকিছু /www/ তে কপি করবে
+          cp -a content/. myapp/www/
 
       - name: Build APK (Release)
         run: |
@@ -47,3 +52,4 @@ jobs:
         with:
           name: android-apk
           path: myapp/platforms/android/app/build/outputs/apk/release/app-release.apk
+          
